@@ -37,7 +37,8 @@ prompt_pure_git_dirty() {
 	# check if it's dirty
 	command git diff --quiet --ignore-submodules HEAD &>/dev/null
 
-	(($? == 1)) && echo '*'
+	(($? == 0)) && echo '%F{242}'$vcs_info_msg_0_' %f'
+	(($? == 1)) && echo '%F{yellow}'$vcs_info_msg_0_' ✚%f'
 }
 
 # displays the exec time of the last command if set threshold was exceeded
@@ -93,7 +94,7 @@ prompt_pure_setup() {
 	[[ "$IN_NIX_SHELL" ]] && prompt_nix_shell=$name
 
 	# prompt turns red if the previous command didn't exit with 0
-	PROMPT='%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty `%(?.%F{magenta}.%F{red})❯%f '
+	PROMPT='`prompt_pure_git_dirty `%(?.%F{magenta}.%F{red})❯%f '
 
     RPROMPT='$prompt_nix_shell'
 }
