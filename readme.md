@@ -1,3 +1,6 @@
-# Arash fork of Pure
+# agnostpure-nix
+a zsh theme with a pure/agnoster appearance an indicator
+of if you are in a nix-shell or not
 
-Truly minimal fork of pure, that is I removed the annoying auto-fetch feature.
+based on the Arash minimal fork of Pure
+

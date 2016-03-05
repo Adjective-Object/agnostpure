@@ -16,7 +16,6 @@
 # %m => shortname host
 # %(?..) => prompt conditional - %(condition.true.false)
 
-
 # turns seconds into human readable time
 # 165392 => 1d 21h 56m 32s
 prompt_pure_human_time() {
@@ -65,7 +64,7 @@ prompt_pure_precmd() {
 	# git info
 	vcs_info
 
-	local prompt_pure_preprompt='\n%F{blue}%~%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty` $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time`%f'
+	local prompt_pure_preprompt='%F{blue}%~ $prompt_pure_username%f %F{yellow}`prompt_pure_cmd_exec_time`%f'
 	print -P $prompt_pure_preprompt
 
 	# reset value since `preexec` isn't always triggered
@@ -90,8 +89,13 @@ prompt_pure_setup() {
 	# show username@host if logged in through SSH
 	[[ "$SSH_CONNECTION" != '' ]] && prompt_pure_username='%n@%m '
 
+	# show name of nix shell if in a nix shell
+	[[ "$IN_NIX_SHELL" ]] && prompt_nix_shell=$name
+
 	# prompt turns red if the previous command didn't exit with 0
-	PROMPT='%(?.%F{magenta}.%F{red})❯%f '
+	PROMPT='%F{242}$vcs_info_msg_0_`prompt_pure_git_dirty `%(?.%F{magenta}.%F{red})❯%f '
+
+    RPROMPT='$prompt_nix_shell'
 }
 
 prompt_pure_setup "$@"
