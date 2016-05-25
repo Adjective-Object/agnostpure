@@ -88,10 +88,10 @@ prompt_pure_setup() {
 	zstyle ':vcs_info:git*' actionformats ' %b|%a'
 
 	# show username@host if logged in through SSH
-	[[ "$SSH_CONNECTION" != '' ]] && prompt_pure_username='%n@%m '
+	if [[ "$SSH_CONNECTION" != '' ]]; then prompt_pure_username='%n@%m '; fi
 
 	# show name of nix shell if in a nix shell
-	[[ "$IN_NIX_SHELL" ]] && prompt_nix_shell=$name
+	if [[ "X$IN_NIX_SHELL" == "X1" ]]; then prompt_nix_shell=$name; fi
 
 	# prompt turns red if the previous command didn't exit with 0
 	PROMPT='`prompt_pure_git_dirty `%(?.%F{magenta}.%F{red})❯%f '
